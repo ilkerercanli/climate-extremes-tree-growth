@@ -1,0 +1,241 @@
+<title>Climate Extremes and Tree Growth</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Growth change caused by climate-change-driven extremes at 6,280 ITRDB sites, and the limiting factor learned by theory-guided AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,650&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: instrument panel — controls strip, map + site card side by side, scenario table below, notes last */
+:root{
+  --bg:#f3f4f0; --panel:#ffffff; --ink:#1d2621; --muted:#5d6a62; --rule:#d5dbd4; --land:#e3e6de; --landedge:#c9cec4;
+  --accent:#2f6b4f; --accent-ink:#ffffff; --loss:#8c510a; --gain:#01665e; --mid:#d9d4c7; --hi:#1d2621;
+  --display:'Literata',Georgia,'Times New Roman',serif; --body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121714; --panel:#1a211d; --ink:#e4e9e5; --muted:#9aa79f; --rule:#2c3530; --land:#232b26; --landedge:#323c36;
+  --accent:#7cc4a0; --accent-ink:#0f1612; --loss:#d9a25a; --gain:#4fc2b2; --mid:#4a4f4b; --hi:#ffffff; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121714; --panel:#1a211d; --ink:#e4e9e5; --muted:#9aa79f; --rule:#2c3530; --land:#232b26; --landedge:#323c36;
+  --accent:#7cc4a0; --accent-ink:#0f1612; --loss:#d9a25a; --gain:#4fc2b2; --mid:#4a4f4b; --hi:#ffffff; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+h1{font-family:var(--display);font-weight:650;font-size:clamp(26px,3.6vw,38px);line-height:1.15;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:650;font-size:21px;margin:0;text-wrap:balance}
+h3{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0;font-weight:600}
+p{margin:0;max-width:68ch}
+.lede{color:var(--muted);font-size:16px}
+.controls{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:flex-end}
+.ctl{display:flex;flex-direction:column;gap:6px}
+.seg{display:flex;flex-wrap:wrap;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--panel)}
+.seg button{font:500 13px var(--body);color:var(--ink);background:transparent;border:0;border-right:1px solid var(--rule);padding:8px 12px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg button:focus-visible,.zoom button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=search]{font:14px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:7px 10px}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+@media (max-width:900px){.main{grid-template-columns:minmax(0,1fr)}}
+.mapbox{position:relative;background:var(--panel);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+canvas#map{display:block;width:100%;aspect-ratio:2/1;max-width:100%;touch-action:none;cursor:grab}
+canvas#map.drag{cursor:grabbing}
+.zoom{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:4px}
+.zoom button{width:32px;height:32px;font:600 16px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;cursor:pointer}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--muted)}
+.ramp{height:10px;width:220px;max-width:50vw;border-radius:2px}
+.ticks{display:flex;justify-content:space-between;width:220px;max-width:50vw;font-family:var(--mono);font-size:11px}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.site-h{display:flex;flex-direction:column;gap:2px}
+.site-code{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.site-sp{font-family:var(--display);font-size:19px;font-style:italic;line-height:1.25}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:13px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bars{display:flex;flex-direction:column;gap:6px}
+.bar{display:grid;grid-template-columns:62px 1fr 56px;gap:8px;align-items:center;font-size:13px}
+.bar .lab{font-weight:500}
+.bar .val{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.track{position:relative;height:12px;background:linear-gradient(var(--rule),var(--rule)) center/1px 100% no-repeat}
+.fill{position:absolute;top:1px;height:10px;border-radius:2px}
+.note{font-size:12.5px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:middle}
+th{font-weight:600;color:var(--muted);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.tblwrap{overflow-x:auto}
+.range{position:relative;height:16px;min-width:200px}
+.range .axis{position:absolute;left:0;right:0;top:7px;height:1px;background:var(--rule)}
+.range .zero{position:absolute;top:0;bottom:0;width:1px;background:var(--muted)}
+.range .seg2{position:absolute;top:5px;height:5px;border-radius:3px;opacity:.55}
+.range .dot{position:absolute;top:3px;width:10px;height:10px;border-radius:50%;margin-left:-5px;border:1.5px solid var(--panel)}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.notes p{font-size:14px}
+code{font-family:var(--mono);font-size:.92em}
+a{color:var(--accent)}
+.empty{color:var(--muted);font-size:14px}
+.sens{display:grid;grid-template-columns:62px 1fr 1fr;gap:4px 10px;font-size:13px;align-items:center}
+.sens .h{color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em}
+.sens .v{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid var(--rule);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.kv{grid-template-columns:minmax(0,1fr) auto!important}.kv dd{text-align:right}
+.leg2{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:18px}
+@media (max-width:520px){.grid2{grid-template-columns:minmax(0,1fr)}}
+</style>
+<div class="wrap">
+<header>
+  <span class="eyebrow">ITRDB · 6,280 sites · observed vs counterfactual climate, 1990–2019</span>
+  <h1>Where have climate extremes changed tree growth, and why?</h1>
+  <p class="lede">Climate change has made hot growing seasons far more frequent. The map shows how much these additional extreme years have changed annual growth at each site, estimated from the rings, and the factor that a theory-guided neural network learned to limit growth there.</p>
+</header>
+
+<div class="controls">
+  <div class="ctl"><h3 id="llab">Map layer</h3><div class="seg" role="group" aria-labelledby="llab" id="layers"></div></div>
+  <div class="ctl"><label for="grp"><h3>Sites</h3></label><select id="grp"><option value="all">All sites</option><option value="cold">Coldest quarter</option><option value="dry">Driest quarter</option></select></div>
+  <div class="ctl"><label for="gen"><h3>Genus</h3></label><select id="gen"><option value="">All genera</option></select></div>
+  <div class="ctl"><label for="q"><h3>Find a site</h3></label><input id="q" type="search" placeholder="Study code, e.g. AK001" list="codes" autocomplete="off"><datalist id="codes"></datalist></div>
+</div>
+
+<div class="main">
+  <div class="mapbox">
+    <canvas id="map" aria-label="World map of ITRDB sites"></canvas>
+    <div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="zreset" aria-label="Reset view">⟲</button></div>
+    <div class="legend"><span id="legtitle"></span><span id="legbody"></span><span id="legn"></span></div>
+  </div>
+  <aside class="card" id="site" aria-live="polite"></aside>
+</div>
+
+<div class="grid2">
+<section class="card">
+  <div style="display:flex;flex-direction:column;gap:4px"><h2>By genus</h2><p class="note">Growth change through extreme years, 1990–2019, relative to the counterfactual climate; genera with at least 40 sites. Bar: 95% spatial-block interval. Colour: share of the growing season limited by temperature in the theory-guided network.</p></div>
+  <div class="tblwrap"><table id="tg"><thead><tr><th>Genus</th><th style="text-align:right">Sites</th><th style="text-align:right">Change</th><th>−12% … +8%</th></tr></thead><tbody></tbody></table></div>
+</section>
+<section class="card">
+  <div style="display:flex;flex-direction:column;gap:4px"><h2>By group and region</h2><p class="note">Same quantity, mean with 95% spatial-block interval.</p></div>
+  <div class="tblwrap"><table id="tr"><thead><tr><th>Group</th><th style="text-align:right">Sites</th><th style="text-align:right">Change</th><th>−8% … +4%</th></tr></thead><tbody></tbody></table></div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-top:6px"><h2>Has the response changed over time?</h2><p class="note">Responses to extreme years estimated from 1902–1960 or from 1961–2019 on the same 4,565 sites, both applied to the frequency changes of 1990–2019. These compare responses learned in two periods, not growth realized in each period.</p></div>
+  <div class="tblwrap"><table id="tp"><thead><tr><th>Group</th><th style="text-align:right">1902–1960</th><th style="text-align:right">1961–2019</th><th style="text-align:right">Later − earlier</th></tr></thead><tbody></tbody></table></div>
+</section>
+</div>
+
+<section class="notes">
+  <div class="card"><h3>How the change is estimated</h3>
+    <p>For each site, a chronology of size-detrended growth is regressed on hot years, dry years and severe winters (thresholds from its 1902–1960 climate) and the following year. The response is multiplied by the change in their frequency between the observed and the ISIMIP3a counterfactual climate in 1990–2019. No neural network is used for this estimate.</p></div>
+  <div class="card"><h3>The theory-guided network</h3>
+    <p><b>T+S</b> builds a size-dependent growth potential (Richards function, metabolic scaling) and Liebig’s principle of limiting factors into its structure: in each month growth is set by the lower of a temperature and a soil-moisture response. A neural network predicts their site-specific parameters. The limiting factor shown here is the share of the growing season in which temperature, rather than moisture, limits growth.</p></div>
+  <div class="card"><h3>Read with care</h3>
+    <p>Values describe trees of the tree-ring archive, which over-represents climate-sensitive sites and North America and Europe; they are not forest productivity or the carbon sink. The estimate captures only change acting through seasonal extremes. Site values are noisy; group means and intervals are the robust result. No raw ring-width data are included.</p></div>
+  <div class="card"><h3>Source</h3>
+    <p>Ercanlı, İ. Theory-guided AI reveals how climate extremes reshape global tree growth (manuscript in preparation). Data: International Tree-Ring Data Bank (NOAA WDS-Paleo), CRU TS 4.09, ISIMIP3a. Code: <a href="https://github.com/ilkerercanli/climate-extremes-tree-growth" target="_blank" rel="noopener">github.com/ilkerercanli/climate-extremes-tree-growth</a>.</p></div>
+</section>
+</div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('data').textContent);
+const S=D.sites; // [0 code,1 genus,2 region,3 lat,4 lon,5 cold,6 dry,7 valid,8 L,9 hotEff,10 dryEff,11 winEff,12 hotDF,13 dryDF,14 winDF,15 hotC,16 dryC,17 winC,18 payT,19 payTcf,20 cls,21 clsCf,22 attrTS]
+const LAYERS=[['Growth change via extremes','L'],['Limiting factor (T+S)','P'],['Extra hot seasons','H']];
+let cur=0, sel=null, grp='all', gen='';
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function hex(c){c=c.replace('#','');if(c.length===3)c=c.split('').map(x=>x+x).join('');return [0,2,4].map(i=>parseInt(c.substr(i,2),16));}
+function mix(a,b,t){return a.map((v,i)=>Math.round(v+(b[i]-v)*t));}
+let PAL;
+function readPal(){PAL={loss:hex(css('--loss')),gain:hex(css('--gain')),mid:hex(css('--mid')),land:css('--land'),edge:css('--landedge'),hi:css('--hi'),panel:css('--panel'),
+  moist:hex('#c0532d'),temp:hex('#2f6fb0'),hot:hex('#b8321f')};}
+function divcol(v,lim){const t=Math.max(-1,Math.min(1,v/lim));const c=t<0?mix(PAL.mid,PAL.loss,-t):mix(PAL.mid,PAL.gain,t);return `rgb(${c})`;}
+function col(v){ if(v==null)return null;
+  if(cur===0) return divcol(v,10);
+  if(cur===1){const c=v<0.5?mix(PAL.mid,PAL.moist,(0.5-v)*2):mix(PAL.mid,PAL.temp,(v-0.5)*2);return `rgb(${c})`;}
+  const t=Math.max(0,Math.min(1,v/10)); return `rgb(${mix(PAL.mid,PAL.hot,t)})`;}
+function val(s){ if(cur===0) return s[7]?s[8]:null; if(cur===1) return s[18]; return s[7]?s[12]:null; }
+function keep(s){ if(grp==='cold'&&!s[5])return false; if(grp==='dry'&&!s[6])return false; if(gen&&s[1]!==gen)return false; return true; }
+
+const lEl=document.getElementById('layers');
+LAYERS.forEach((m,i)=>{const b=document.createElement('button');b.type='button';b.textContent=m[0];b.setAttribute('aria-pressed',i===cur);b.onclick=()=>{cur=i;[...lEl.children].forEach((x,j)=>x.setAttribute('aria-pressed',j===cur));draw();legend();};lEl.appendChild(b);});
+const genSel=document.getElementById('gen'); D.genus.map(g=>g[0]).sort().forEach(g=>{const o=document.createElement('option');o.value=g;o.textContent=g;genSel.appendChild(o);});
+genSel.onchange=e=>{gen=e.target.value;draw();legend();};
+document.getElementById('grp').onchange=e=>{grp=e.target.value;draw();legend();};
+
+const cv=document.getElementById('map'), ctx=cv.getContext('2d');
+let W=0,H=0,dpr=1, view={x:0,y:10,k:1};
+function size(){const r=cv.getBoundingClientRect();dpr=window.devicePixelRatio||1;W=r.width;H=r.width/2;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
+function proj(lon,lat){const s=W/360*view.k;return [W/2+(lon-view.x)*s, H/2-(lat-view.y)*s];}
+function unproj(px,py){const s=W/360*view.k;return [view.x+(px-W/2)/s, view.y-(py-H/2)/s];}
+function clampView(){view.k=Math.max(1,Math.min(16,view.k));const hw=180/view.k,hh=90/view.k;view.x=Math.max(-180+hw,Math.min(180-hw,view.x));view.y=Math.max(-90+hh,Math.min(90-hh,view.y));}
+function draw(){
+  if(!W)return; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=PAL.land; ctx.strokeStyle=PAL.edge; ctx.lineWidth=.6;
+  ctx.beginPath(); for(const r of D.land){ r.forEach((p,i)=>{const q=proj(p[0],p[1]); i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);}); ctx.closePath(); } ctx.fill('nonzero');
+  const rad=Math.max(1.6,Math.min(5,1.4*Math.sqrt(view.k)))*(W<500?0.85:1);
+  const pts=[]; for(const s of S){if(!keep(s))continue;const v=val(s); if(v==null)continue; pts.push([cur===1?Math.abs(v-0.5):Math.abs(v),s,v]);}
+  pts.sort((a,b)=>a[0]-b[0]);
+  for(const [,s,v] of pts){const q=proj(s[4],s[3]); if(q[0]<-5||q[0]>W+5||q[1]<-5||q[1]>H+5)continue; ctx.fillStyle=col(v); ctx.beginPath(); ctx.arc(q[0],q[1],rad,0,6.283); ctx.fill();
+    if(cur===1&&s[20]==='M'&&s[21]==='T'){ctx.strokeStyle=PAL.hi;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(q[0]-rad-1,q[1]-rad-1);ctx.lineTo(q[0]+rad+1,q[1]+rad+1);ctx.moveTo(q[0]+rad+1,q[1]-rad-1);ctx.lineTo(q[0]-rad-1,q[1]+rad+1);ctx.stroke();}}
+  if(sel){const q=proj(sel[4],sel[3]); ctx.lineWidth=2; ctx.strokeStyle=PAL.hi; ctx.beginPath(); ctx.arc(q[0],q[1],rad+4,0,6.283); ctx.stroke();}
+}
+function ramp(f,a,b,labs){const c=document.createElement('canvas');c.width=220;c.height=10;c.className='ramp';const x=c.getContext('2d');for(let i=0;i<220;i++){x.fillStyle=f(a+(b-a)*i/219);x.fillRect(i,0,1,10);}
+  const w=document.createElement('span');w.style.cssText='display:flex;flex-direction:column;gap:2px';w.appendChild(c);const t=document.createElement('span');t.className='ticks';t.innerHTML=labs.map(l=>`<span>${l}</span>`).join('');w.appendChild(t);return w;}
+function legend(){
+  const T=document.getElementById('legtitle'),B=document.getElementById('legbody');B.innerHTML='';
+  if(cur===0){T.textContent='Change in annual growth, % (1990–2019 vs counterfactual)';B.appendChild(ramp(col,-10,10,['−10','−5','0','+5','+10']));}
+  else if(cur===1){T.textContent='Share of growing season limited by temperature';B.appendChild(ramp(col,0,1,['0 (moisture)','0.5','1 (temperature)']));
+    const x=document.createElement('span');x.className='note';x.textContent='✕ moisture-limited only under the observed climate';B.appendChild(x);}
+  else {T.textContent='Additional hot growing seasons per decade (observed − counterfactual)';B.appendChild(ramp(col,0,10,['0','5','10']));}
+  const vals=S.filter(keep).map(val).filter(v=>v!=null);
+  let extra='';
+  if(cur===0){const m=vals.reduce((a,b)=>a+b,0)/vals.length; extra=` · mean of site values <b style="font-family:var(--mono)">${fmt(m)}%</b>`;}
+  if(cur===1){const t=vals.filter(v=>v>0.5).length; extra=` · ${Math.round(100*t/vals.length)}% temperature-limited`;}
+  document.getElementById('legn').innerHTML=`${vals.length.toLocaleString('en')} sites${extra}`;
+}
+function fmt(v,d=1){return v==null?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(d);}
+
+let drag=null, moved=false;
+cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,vx:view.x,vy:view.y};moved=false;cv.setPointerCapture(e.pointerId);cv.classList.add('drag');});
+cv.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4)moved=true;const s=W/360*view.k;view.x=drag.vx-dx/s;view.y=drag.vy+dy/s;clampView();draw();});
+cv.addEventListener('pointerup',e=>{cv.classList.remove('drag');if(drag&&!moved){pick(e);}drag=null;});
+cv.addEventListener('wheel',e=>{e.preventDefault();const r=cv.getBoundingClientRect();zoomAt(e.clientX-r.left,e.clientY-r.top,e.deltaY<0?1.4:1/1.4);},{passive:false});
+function zoomAt(px,py,f){const a=unproj(px,py);view.k*=f;clampView();const b=unproj(px,py);view.x+=a[0]-b[0];view.y+=a[1]-b[1];clampView();draw();}
+document.getElementById('zin').onclick=()=>zoomAt(W/2,H/2,1.6);
+document.getElementById('zout').onclick=()=>zoomAt(W/2,H/2,1/1.6);
+document.getElementById('zreset').onclick=()=>{view={x:0,y:10,k:1};clampView();draw();};
+function pick(e){const r=cv.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;let best=null,bd=144;
+  for(const s of S){if(!keep(s)||val(s)==null)continue;const q=proj(s[4],s[3]);const d=(q[0]-px)**2+(q[1]-py)**2;if(d<bd){bd=d;best=s;}}
+  if(best)select(best);}
+
+const card=document.getElementById('site');
+function bar(lab,v,c,lim=10,unit='%'){const t=Math.max(-1,Math.min(1,(v||0)/lim));const left=t<0?50+t*50:50;const w=Math.abs(t)*50;
+  return `<div class="bar"><span class="lab">${lab}</span><span class="track"><span class="fill" style="left:${left}%;width:${w}%;background:${c}"></span></span><span class="val">${fmt(v)}${unit}</span></div>`;}
+const CL={T:'temperature',M:'moisture'};
+function select(s){sel=s;draw();
+  let h=`<div class="site-h"><span class="site-code">${s[0]} · ${s[3].toFixed(2)}°, ${s[4].toFixed(2)}° · ${s[2]}</span><span class="site-sp">${s[1]}</span></div>`;
+  if(s[18]!=null) h+=`<dl class="kv"><dt>Limited by (T+S), observed climate</dt><dd>${CL[s[20]]||'–'} · ${Math.round(100*s[18])}% temperature</dd><dt>Counterfactual climate</dt><dd>${CL[s[21]]||'–'} · ${Math.round(100*s[19])}% temperature</dd>${s[5]?'<dt>Group</dt><dd>coldest quarter</dd>':''}${s[6]?'<dt>Group</dt><dd>driest quarter</dd>':''}</dl>`;
+  if(s[7]){h+=`<div style="display:flex;flex-direction:column;gap:8px"><h3>Change in annual growth via extremes, 1990–2019</h3><div class="bars">`+
+    bar('Total',s[8],divcol(s[8],10))+bar('Hot',s[15],divcol(s[15],10))+bar('Dry',s[16],divcol(s[16],10))+bar('Winter',s[17],divcol(s[17],10))+`</div>
+    <h3>Extreme years per decade, observed − counterfactual</h3><dl class="kv"><dt>Hot growing seasons</dt><dd>${fmt(s[12])}</dd><dt>Dry growing seasons</dt><dd>${fmt(s[13])}</dd><dt>Severe winters</dt><dd>${fmt(s[14])}</dd></dl>
+    <h3>Growth effect of one extreme year (incl. next year)</h3><dl class="kv"><dt>Hot year</dt><dd>${fmt(s[9])}%</dd><dt>Dry year</dt><dd>${fmt(s[10])}%</dd><dt>Severe winter</dt><dd>${fmt(s[11])}%</dd></dl>
+    <p class="note">Single-site estimates are noisy; interpret through group means.</p></div>`;}
+  else h+=`<p class="empty">This site lacks rings in 1990–2019 or counterfactual climate, so only its limiting factor is shown.</p>`;
+  card.innerHTML=h;}
+function intro(){card.innerHTML=`<div class="site-h"><span class="site-code">Select a site</span><span class="site-sp">Click any point on the map</span></div><p class="note">The card shows the growth change through hot years, dry years and severe winters, the change in their frequency, and the limiting factor learned by the theory-guided network. Drag to pan, scroll or use + and − to zoom.</p>`;}
+
+const dl=document.getElementById('codes'); dl.innerHTML=S.map(s=>`<option value="${s[0]}">${s[1]}</option>`).join('');
+document.getElementById('q').addEventListener('change',e=>{const q=e.target.value.trim().toLowerCase();if(!q)return;
+  const s=S.find(s=>s[0].toLowerCase()===q); if(s){view.x=s[4];view.y=s[3];view.k=Math.max(view.k,4);clampView();select(s);}});
+
+function rangeCell(m,lo,hi,a,b,c){const X=v=>((Math.max(a,Math.min(b,v))-a)/(b-a)*100);
+  return `<div class="range"><span class="axis"></span><span class="zero" style="left:${X(0)}%"></span><span class="seg2" style="left:${X(lo)}%;width:${Math.max(1,X(hi)-X(lo))}%;background:${c}"></span><span class="dot" style="left:${X(m)}%;background:${c}"></span></div>`;}
+function tables(){
+  const pc=v=>{const c=v<0.5?mix(PAL.mid,PAL.moist,(0.5-v)*2):mix(PAL.mid,PAL.temp,(v-0.5)*2);return `rgb(${c})`;};
+  document.querySelector('#tg tbody').innerHTML=[...D.genus].sort((a,b)=>a[2]-b[2]).map(g=>`<tr><td><i>${g[0]}</i></td><td class="num">${g[1]}</td><td class="num">${fmt(g[2])}%</td><td>${rangeCell(g[2],g[3],g[4],-12,8,pc(g[5]))}</td></tr>`).join('');
+  document.querySelector('#tr tbody').innerHTML=[...D.groups,...D.region].map(g=>`<tr><td>${g[0]}</td><td class="num">${g[1].toLocaleString('en')}</td><td class="num">${fmt(g[2])}%</td><td>${rangeCell(g[2],g[3],g[4],-8,4,divcol(g[2],5))}</td></tr>`).join('');
+  document.querySelector('#tp tbody').innerHTML=D.period.map(p=>`<tr><td>${p[0]}</td><td class="num">${fmt(p[1])}%</td><td class="num">${fmt(p[4])}%</td><td class="num">${fmt(p[7])} [${fmt(p[8])}, ${fmt(p[9])}]</td></tr>`).join('');
+}
+function all(){readPal();size();clampView();draw();legend();tables();if(sel)select(sel);}
+new ResizeObserver(()=>{size();draw();}).observe(cv);
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',all);
+new MutationObserver(all).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+intro(); all();
+})();
+</script>
