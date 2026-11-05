@@ -1,48 +1,44 @@
-# Theory-guided AI reveals how climate extremes reshape global tree growth
+# Theory-guided AI reveals that a century of climate change has slowed tree growth in dry forests but not in cold ones
 
-Code and derived site-level results for:
+Code for:
 
-> Ercanlı, İ. *Theory-guided AI reveals how climate extremes reshape global tree growth.* Manuscript in preparation.
+> Ercanlı, İ. *Theory-guided AI reveals that a century of climate change has slowed tree growth in dry forests but not in cold ones.* Manuscript submitted.
 
-Companion study (model development and projections, separate repository):
+The study attributes changes in annual tree growth in the International Tree-Ring Data Bank (19.4 million rings, 120,332 trees, 6,280 sites) to climate change by driving a theory-guided neural network with the observed CRU TS 4.09 climate and the ISIMIP3a counterfactual climate. It compares the network with a statistical estimate from the rings that uses no network.
+
+Data preparation (ITRDB retrieval, climate extraction, site variables) follows the companion study:
 > Ercanlı, İ. *Growth theory changes projected tree-growth responses to climate despite similar historical skill.* Manuscript under review.
 > Code: <https://github.com/ilkerercanli/growth-theory-ai>
 
-## What this repository contains
+## Contents
 
 | Folder | Content |
 |---|---|
-| `notebooks/` | Google Colab notebooks (Defter 11–18) that produce every number in the manuscript. They load the models trained in the companion repository; **no model is retrained here**. |
-| `figures/` | Python scripts that draw Figs 1–4 and Extended Data Figs 1–2 from the result tables (`blok.py` holds the spatial-block results copied from the tables). |
-| `app/` | Interactive explorer: `index.src.html` (template), `data.json` (derived site-level results), `build.py` (inlines the data). |
-| `docs/` | Built explorer (`index.html`) for GitHub Pages. |
-| `results/result_provenance.csv` | For every result table: the notebook that produced it, the run date (UTC) and the random-seed note. All tables come from a single version of the prepared data set. |
+| `notebooks/network/` | Google Colab notebooks for the theory-guided network: year-block cross-validation, training of the 20-member ensemble, attribution, uncertainty and the reviewer analyses |
+| `notebooks/ring_based_estimate/` | Notebooks that produce the ring-based estimate of growth change through extreme years (equations 5–6 of the manuscript), its spatial-block intervals, specifications and permutation tests |
+| `figures/` | Figure scripts: Defter 22 (Figs 1–6, Extended Data Figs 2–4) and `figures_draft14.py` (revised Figs 2–5 and Extended Data Figs 5–6; Fig. 4a in 100 × log units so that the channel contributions add up, Fig. 4b on sites recorded in every period); `ED1_structure.py` draws Extended Data Fig. 1 |
+| `results/result_provenance.csv` | For every result table: the notebook that produced it, the Drive folder, the time of the last change (UTC) and the random seed |
+| `archive/` | Notebooks and figure scripts of an earlier version of the study that are not used in the manuscript |
 
 ## Notebooks
 
-| Notebook | Purpose |
-|---|---|
-| Defter 11 | Attribution with observed and ISIMIP3a counterfactual climate |
-| Defter 12 | Classical methods (response function, VS-Lite) and detection test |
-| Defter 13 | Extreme years: frequency, observed responses, model responses |
-| Defter 14 | Growth change through extreme years (equations 4–5) and limiting factor |
-| Defter 15 | Independent tests, robustness, confounding, spatial-block intervals |
-| Defter 16 | Same-target comparison, paired differences, block size, block-shared permutation |
-| Defter 17 | Predicted − observed differences with paired spatial-block intervals |
-| Defter 18 | Change in responses between 1902–1960 and 1961–2019 |
+| Notebook | Purpose | Output folder |
+|---|---|---|
+| `network/Defter19_year_block_pilot` | Pilot of the year-block cross-validation (five-year blocks, four folds) | `SONUC_19` |
+| `network/Defter20_main_run` | Architecture search, main run (4 folds × 5 seeds), comparison without climate, ensemble uncertainty, unseen-site test | `SONUC_20` |
+| `network/Defter21_attribution_uncertainty` | Counterfactual climate, attribution by period, decade and channel, limiting factors, growth curves, calibration at unseen sites | `SONUC_21` |
+| `network/Defter23A_reviewer_analyses` | Same-site comparison with the ring-based estimate, balanced panels and chain-linked index, spatial-block intervals, age and sampling, bounds, factorial Shapley decomposition, out-of-distribution check | `SONUC_23A` |
+| `network/Defter23B_transfer_and_structure` | Network trained on 1902–1960 only; product rule instead of the law of the minimum; comparison of all estimates | `SONUC_23B` |
+| `ring_based_estimate/Defter13–16` | Extreme-year frequency and responses, growth change through extreme years, spatial-block intervals, specifications, block size and block-shared permutation | `ANALIZ_SON` |
 
-Run order: the companion repository's data preparation and training notebooks first, then Defter 11 → 18 in Google Colab (GPU recommended for 11–17; Defter 18 needs no GPU). Outputs are written to `ANALIZ_SON/` in the user's Google Drive.
+Run order: the companion repository's data preparation first, then Defter 13–16 and Defter 19 → 20 → 21 → 23A → 23B in Google Colab (L4 or T4 GPU, high RAM), then the figure scripts (`figures_draft14.py` reads the summary tables of SONUC_21, SONUC_23A/23B and the Defter 22 output). Each notebook ends with the line `==== DEFTER NN TAMAM ====`. Comments and printed messages in the notebooks are partly in Turkish.
 
 ## Data and permissions
 
-- **Tree rings:** International Tree-Ring Data Bank (NOAA World Data Service for Paleoclimatology). Raw measurements are **not redistributed**; the companion repository provides the study codes and code that retrieves the identical data set. Records with withheld coordinates or third-party permission were excluded.
+- **Tree rings:** International Tree-Ring Data Bank (NOAA World Data Service for Paleoclimatology). Raw measurements are not redistributed; the companion repository provides the study codes and code that retrieves the identical data set. Records with withheld coordinates or third-party permission were excluded.
 - **Climate:** CRU TS 4.09 (Open Government Licence v3); ISIMIP3a GSWP3-W5E5 obsclim and counterclim.
-- `app/data.json` contains only derived site-level quantities (growth change through extreme years, event effects, frequency changes, limiting-factor shares) and public site metadata (study code, coordinates, genus, region).
-
-## Interactive explorer
-
-Open `docs/index.html` in a browser, or enable GitHub Pages on the `docs/` folder. To rebuild after changing the data: `python app/build.py`.
+- **Site variables:** SoilGrids 2.0, Copernicus DEM GLO-90, RESOLVE Ecoregions 2017 and Köppen–Geiger 1-km maps (open licences; see Methods).
 
 ## Citation and licence
 
-Please cite the article (DOI to be added on publication; archived on Zenodo). Code is released under the MIT licence (`LICENSE`).
+Please cite the article (DOI to be added on publication; the repository will be archived on Zenodo). Code is released under the MIT licence (`LICENSE`).

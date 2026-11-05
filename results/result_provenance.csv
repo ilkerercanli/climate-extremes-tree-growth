@@ -1,0 +1,67 @@
+table,notebook,drive_modified_utc,folder,random_seed
+P1_pilot_ozet_v2.csv,notebooks/network/Defter19_year_block_pilot.ipynb,2026-11-03T22:41:36Z,SONUC_19,fold assignment: default_rng(2026); training: torch.manual_seed(seed)
+P0_yil_katlari.csv,notebooks/network/Defter20_main_run.ipynb,2026-11-04T12:39:22Z,SONUC_20,fold assignment: default_rng(2026); training seeds 0-4 per fold (20 members)
+P2_mimari_arama.csv,notebooks/network/Defter20_main_run.ipynb,2026-11-04T13:53:20Z,SONUC_20,fold assignment: default_rng(2026); training seeds 0-4 per fold (20 members)
+P3_ana_kosu.csv,notebooks/network/Defter20_main_run.ipynb,2026-11-04T15:52:26Z,SONUC_20,fold assignment: default_rng(2026); training seeds 0-4 per fold (20 members)
+P4_model_karsilastirma.csv,notebooks/network/Defter20_main_run.ipynb,2026-11-04T15:52:26Z,SONUC_20,fold assignment: default_rng(2026); training seeds 0-4 per fold (20 members)
+P5_topluluk_belirsizlik.csv,notebooks/network/Defter20_main_run.ipynb,2026-11-04T16:05:37Z,SONUC_20,fold assignment: default_rng(2026); training seeds 0-4 per fold (20 members)
+P6_belirsizlik_ondalik.csv,notebooks/network/Defter20_main_run.ipynb,2026-11-04T16:05:37Z,SONUC_20,fold assignment: default_rng(2026); training seeds 0-4 per fold (20 members)
+P7_yillik_belirsizlik.csv,notebooks/network/Defter20_main_run.ipynb,2026-11-04T16:05:37Z,SONUC_20,fold assignment: default_rng(2026); training seeds 0-4 per fold (20 members)
+P8_saha_testi.csv,notebooks/network/Defter20_main_run.ipynb,2026-11-04T16:03:43Z,SONUC_20,fold assignment: default_rng(2026); training seeds 0-4 per fold (20 members)
+Q0_iklim_degisimi_alan.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:04:04Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q0_iklim_degisimi_grup.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:04:04Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q0_iklim_degisimi_onyil.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:04:06Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q1_saha_kalibrasyon.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:04:23Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q2_sapma_egim.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:05:03Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q2_sapma_grup.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:05:03Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q2_sapma_yas_onyil.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:05:03Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q3_atif_alan.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:10:46Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q3_atif_grup.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:10:46Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q3_atif_kanal.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:10:46Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q3_atif_onyil.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:10:42Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q4_rejim_gecisi.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:11:01Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q4_sinirlayici_alan.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:11:00Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q4_sinirlayici_grup.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:11:01Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q5_buyume_egrisi_alan.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:11:05Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q5_buyume_egrisi_grup.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:11:05Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+Q5_egri_ortalama.csv,notebooks/network/Defter21_attribution_uncertainty.ipynb,2026-11-04T17:11:05Z,SONUC_21,20 members of Defter 20; bootstrap: default_rng (see notebook)
+A1_ayni_saha.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:19:26Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+A2_denge_onyil.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:19:35Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+A2_ortaya_cikis.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:19:35Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+A3_blok_aralik.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:19:27Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+A4_yas_orneklem.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:19:39Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+A5_sinirlama_duyarlilik.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:20:13Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+A5_sinirlama_sayim.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:20:06Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+A6_faktoriyel.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:20:28Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+A6_faktoriyel_alan.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:20:28Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+A7_dagilim_disi.csv,notebooks/network/Defter23A_reviewer_analyses.ipynb,2026-11-04T19:20:29Z,SONUC_23A,10-degree block bootstrap: default_rng (see notebook); A5/A6 use one member per fold
+B1_erken_beceri.csv,notebooks/network/Defter23B_transfer_and_structure.ipynb,2026-11-04T20:23:32Z,SONUC_23B,"B1: seeds 0-4, inner validation default_rng(2026+500); B2: 4 folds x seeds 0-4"
+B1_erken_uyeler.csv,notebooks/network/Defter23B_transfer_and_structure.ipynb,2026-11-04T20:23:32Z,SONUC_23B,"B1: seeds 0-4, inner validation default_rng(2026+500); B2: 4 folds x seeds 0-4"
+B2_carpim_beceri.csv,notebooks/network/Defter23B_transfer_and_structure.ipynb,2026-11-04T20:23:33Z,SONUC_23B,"B1: seeds 0-4, inner validation default_rng(2026+500); B2: 4 folds x seeds 0-4"
+B2_carpim_uyeler.csv,notebooks/network/Defter23B_transfer_and_structure.ipynb,2026-11-04T20:23:33Z,SONUC_23B,"B1: seeds 0-4, inner validation default_rng(2026+500); B2: 4 folds x seeds 0-4"
+B3_alan.csv,notebooks/network/Defter23B_transfer_and_structure.ipynb,2026-11-04T20:33:28Z,SONUC_23B,"B1: seeds 0-4, inner validation default_rng(2026+500); B2: 4 folds x seeds 0-4"
+B3_karsilastirma.csv,notebooks/network/Defter23B_transfer_and_structure.ipynb,2026-11-04T20:33:27Z,SONUC_23B,"B1: seeds 0-4, inner validation default_rng(2026+500); B2: 4 folds x seeds 0-4"
+B3_onyil.csv,notebooks/network/Defter23B_transfer_and_structure.ipynb,2026-11-04T20:33:28Z,SONUC_23B,"B1: seeds 0-4, inner validation default_rng(2026+500); B2: 4 folds x seeds 0-4"
+M2_uc_olay_gozlenen.csv,notebooks/ring_based_estimate/Defter13_ASIL_SORULAR.ipynb,2026-10-26T17:32:24Z,ANALIZ_SON,bootstrap: default_rng(2061)
+M3_uc_olay_model.csv,notebooks/ring_based_estimate/Defter13_ASIL_SORULAR.ipynb,2026-10-26T17:32:47Z,ANALIZ_SON,bootstrap: default_rng(2061)
+M4_uc_olay_siklik.csv,notebooks/ring_based_estimate/Defter13_ASIL_SORULAR.ipynb,2026-10-26T17:32:56Z,ANALIZ_SON,bootstrap: default_rng(2061)
+M5_atif_olay_yillari.csv,notebooks/ring_based_estimate/Defter13_ASIL_SORULAR.ipynb,2026-10-26T17:33:10Z,ANALIZ_SON,bootstrap: default_rng(2061)
+N1_uc_olay_kanali.csv,notebooks/ring_based_estimate/Defter14_NATURE_EK_ANALIZ.ipynb,2026-10-26T17:53:33Z,ANALIZ_SON,bootstrap: default_rng(2061)
+N1a_uc_olay_kanali_alan.csv,notebooks/ring_based_estimate/Defter14_NATURE_EK_ANALIZ.ipynb,2026-10-26T17:53:33Z,ANALIZ_SON,bootstrap: default_rng(2061)
+N2_sinirlayici_faktor_ozet.csv,notebooks/ring_based_estimate/Defter14_NATURE_EK_ANALIZ.ipynb,2026-10-26T17:54:22Z,ANALIZ_SON,bootstrap: default_rng(2061)
+N2a_sinirlayici_faktor_alan.csv,notebooks/ring_based_estimate/Defter14_NATURE_EK_ANALIZ.ipynb,2026-10-26T17:54:21Z,ANALIZ_SON,bootstrap: default_rng(2061)
+N2b_sinirlama_atif_iliskisi.csv,notebooks/ring_based_estimate/Defter14_NATURE_EK_ANALIZ.ipynb,2026-10-26T17:54:22Z,ANALIZ_SON,bootstrap: default_rng(2061)
+N3a_uc_olay_saglamlik.csv,notebooks/ring_based_estimate/Defter14_NATURE_EK_ANALIZ.ipynb,2026-10-26T17:54:36Z,ANALIZ_SON,bootstrap: default_rng(2061)
+N3b_kisitli_atif.csv,notebooks/ring_based_estimate/Defter14_NATURE_EK_ANALIZ.ipynb,2026-10-26T17:54:37Z,ANALIZ_SON,bootstrap: default_rng(2061)
+P1_bagimsiz_dogrulama.csv,notebooks/ring_based_estimate/Defter15_HAKEM_YANITLARI.ipynb,2026-10-26T18:39:54Z,ANALIZ_SON,bootstrap: default_rng(2061)
+P2_saglamlik_blok.csv,notebooks/ring_based_estimate/Defter15_HAKEM_YANITLARI.ipynb,2026-10-26T18:39:58Z,ANALIZ_SON,bootstrap: default_rng(2061)
+P2b_ana_blok_araliklari.csv,notebooks/ring_based_estimate/Defter15_HAKEM_YANITLARI.ipynb,2026-10-26T18:39:59Z,ANALIZ_SON,bootstrap: default_rng(2061)
+P3_karisiklik.csv,notebooks/ring_based_estimate/Defter15_HAKEM_YANITLARI.ipynb,2026-10-26T18:40:03Z,ANALIZ_SON,bootstrap: default_rng(2061)
+P4_tespit_blok.csv,notebooks/ring_based_estimate/Defter15_HAKEM_YANITLARI.ipynb,2026-10-26T18:40:24Z,ANALIZ_SON,bootstrap: default_rng(2061)
+P4b_ortak_sapma.csv,notebooks/ring_based_estimate/Defter15_HAKEM_YANITLARI.ipynb,2026-10-26T18:40:24Z,ANALIZ_SON,bootstrap: default_rng(2061)
+Q3_tespit_farklari.csv,notebooks/ring_based_estimate/Defter16_IKINCI_HAKEM_TURU.ipynb,2026-10-26T19:01:39Z,ANALIZ_SON,bootstrap: default_rng(2061)
+Q3b_blok_boyutu.csv,notebooks/ring_based_estimate/Defter16_IKINCI_HAKEM_TURU.ipynb,2026-10-26T19:01:40Z,ANALIZ_SON,bootstrap: default_rng(2061)
+Q3c_blok_permutasyon.csv,notebooks/ring_based_estimate/Defter16_IKINCI_HAKEM_TURU.ipynb,2026-10-26T19:02:49Z,ANALIZ_SON,bootstrap: default_rng(2061)
+Q4_saha_sayilari.csv,notebooks/ring_based_estimate/Defter16_IKINCI_HAKEM_TURU.ipynb,2026-10-26T19:02:56Z,ANALIZ_SON,bootstrap: default_rng(2061)
+"SOURCE_DATA_Fig1-6, SOURCE_DATA_ED2-4",figures/Defter22_figures.ipynb,2026-11-04T18:37:10Z,SEKILLER_22,none
+"Fig2-5, ED5, ED6 and their SOURCE_DATA (draft 14; Fig. 4b on common sites from Q4_sinirlayici_alan.csv)",figures/figures_draft14.py,2026-11-05,SEKILLER_23,ED5 block bootstrap: default_rng(2026)
